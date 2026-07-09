@@ -15,7 +15,7 @@ export function VerticalNavbar() {
     const [hoveredPath, setHoveredPath] = useState<string | null>(null);
 
     return (
-        <nav className="fixed inset-y-0 right-0 z-50 flex items-center pr-4">
+        <nav className="fixed inset-y-0 right-4 z-50 flex items-center">
             <div className="bg-card border-12 border-slash">
                 <div className="flex flex-col items-end text-xs">
                     {NAV_LINKS.map((link) => (
@@ -32,7 +32,7 @@ export function VerticalNavbar() {
                     ))}
                 </div>
             </div>
-            <div className="absolute right-2 top-2">
+            <div className="absolute right-0 top-2">
                 <ThemeToggle />
             </div>
         </nav>

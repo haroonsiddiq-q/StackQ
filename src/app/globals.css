@@ -4,6 +4,14 @@
   cursor: none !important;
 }
 
+html {
+  scrollbar-width: none;
+}
+
+::-webkit-scrollbar {
+  display: none;
+}
+
 @theme {
   --color-primary: var(--theme-primary);
   --color-secondary: var(--theme-secondary);
@@ -46,23 +54,4 @@
       currentColor 3px,
       transparent 3px,
       transparent 12px) 10 stretch;
-}
-
-::-webkit-scrollbar {
-  width: 8px;
-}
-
-::-webkit-scrollbar-thumb {
-  border-radius: 8px;
-  background-color: var(--theme-primary);
-}
-
-.at-top::-webkit-scrollbar-thumb {
-  border-top-left-radius: 0px;
-  border-top-right-radius: 0px;
-}
-
-.at-bottom::-webkit-scrollbar-thumb {
-  border-bottom-left-radius: 0px;
-  border-bottom-right-radius: 0px;
 }

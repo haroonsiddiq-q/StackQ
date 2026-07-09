@@ -29,7 +29,6 @@ export default function RootLayout({
           <CustomScrollbar />
           
           {/* <Navbar /> */}
-
           <VerticalNavbar />
           
           <main className="mx-auto">
