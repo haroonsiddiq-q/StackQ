@@ -111,8 +111,9 @@ export function CustomScrollbar() {
       style={{ width: THUMB_WIDTH }}
     >
       <div
+        data-cursor-expand
         onPointerDown={handleThumbPointerDown}
-        className="absolute right-0 cursor-pointer"
+        className="absolute right-0"
         style={{
           top: thumb.top,
           height: thumb.height,

@@ -1,10 +1,23 @@
 import type { Metadata } from "next";
+import { Press_Start_2P, Inter } from "next/font/google";
 import CustomCursor from "@/app/components/ui/custom-cursor";
 import { CustomScrollbar } from "@/app/components/ui/custom-scrollbar";
 import { ThemeProvider } from "@/app/components/ui/theme-provider";
 import { Navbar } from "@/app/components/layout/navbar";
-import { VerticalNavbar } from "@/app/components/layout/vertical-navbar";
 import "./globals.css";
+
+const pressStart2P = Press_Start_2P({
+  weight: "400",
+  subsets: ["latin"],
+  variable: "--font-pixel",
+  display: "swap",
+});
+ 
+const inter = Inter({
+  subsets: ["latin"],
+  variable: "--font-body",
+  display: "swap",
+});
 
 export const metadata: Metadata = {
   title: "StackQ - Portfolio",
@@ -18,7 +31,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className="bg-background text-text antialiased transition-colors duration-300">
+      <body className={`${pressStart2P.variable} ${inter.variable} bg-background text-text antialiased transition-colors duration-300`}>
         <ThemeProvider
           attribute="class"
           defaultTheme="system"
@@ -27,14 +40,11 @@ export default function RootLayout({
         >
           <CustomCursor />
           <CustomScrollbar />
-          
-          {/* <Navbar /> */}
-          <VerticalNavbar />
-          
-          <main className="mx-auto">
-            {children}
-          </main>
-          
+
+          <Navbar />
+
+          {children}
+
         </ThemeProvider>
       </body>
     </html>

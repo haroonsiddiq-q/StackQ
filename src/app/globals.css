@@ -4,6 +4,10 @@
   cursor: none !important;
 }
 
+body {
+  font-family: var(--font-body), sans-serif;
+}
+
 html {
   scrollbar-width: none;
 }
@@ -21,6 +25,8 @@ html {
   --color-border: var(--theme-border);
   --color-card: var(--theme-card);
   --color-hover: var(--theme-hover);
+  --font-pixel: var(--font-pixel);
+  --font-body: var(--font-body);
 }
 
 @layer base {

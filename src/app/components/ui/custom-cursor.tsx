@@ -14,6 +14,7 @@ export default function CustomCursor() {
   const targetRef = useRef<BracketState>({ x: -200, y: -200, w: OFFSET * 2, h: OFFSET * 2 });
   const cursorRef = useRef({ x: -200, y: -200 });
   const hoveringRef = useRef(false);
+  const hoveredElRef = useRef<HTMLElement | null>(null);
   const rafRef = useRef<number>(0);
 
   useEffect(() => {
@@ -29,6 +30,16 @@ export default function CustomCursor() {
     };
 
     const draw = () => {
+      if (hoveringRef.current && hoveredElRef.current) {
+        const r = hoveredElRef.current.getBoundingClientRect();
+        targetRef.current = {
+          x: r.left - PAD,
+          y: r.top - PAD,
+          w: r.width + PAD * 2,
+          h: r.height + PAD * 2,
+        };
+      }
+
       const sp = hoveringRef.current ? 0.1 : 0.18;
       const a = animRef.current;
       const t = targetRef.current;
@@ -70,33 +81,31 @@ export default function CustomCursor() {
       }
     };
 
-    // Exactly what worked in the demo: bind directly to each element
-    const addHover = () => {
-      document.querySelectorAll<HTMLElement>("[data-cursor-expand]").forEach(el => {
-        el.addEventListener("mouseenter", () => {
-          hoveringRef.current = true;
-          const r = el.getBoundingClientRect();
-          targetRef.current = {
-            x: r.left - PAD,
-            y: r.top - PAD,
-            w: r.width + PAD * 2,
-            h: r.height + PAD * 2,
-          };
-        });
-        el.addEventListener("mouseleave", () => {
-          hoveringRef.current = false;
-        });
-      });
+    const onMouseOver = (e: MouseEvent) => {
+      const el = (e.target as HTMLElement).closest<HTMLElement>("[data-cursor-expand]");
+      if (!el) return;
+      hoveringRef.current = true;
+      hoveredElRef.current = el;
+    };
+
+    const onMouseOut = (e: MouseEvent) => {
+      const el = (e.target as HTMLElement).closest<HTMLElement>("[data-cursor-expand]");
+      if (!el) return;
+      const related = e.relatedTarget as HTMLElement | null;
+      if (related && el.contains(related)) return;
+      hoveringRef.current = false;
+      hoveredElRef.current = null;
     };
 
     window.addEventListener("mousemove", onMove);
-    window.addEventListener("cursor:refresh", addHover);
-    addHover();
+    window.addEventListener("mouseover", onMouseOver);
+    window.addEventListener("mouseout", onMouseOut);
     rafRef.current = requestAnimationFrame(draw);
 
     return () => {
       window.removeEventListener("mousemove", onMove);
-      window.removeEventListener("cursor:refresh", addHover);
+      window.removeEventListener("mouseover", onMouseOver);
+      window.removeEventListener("mouseout", onMouseOut);
       cancelAnimationFrame(rafRef.current);
     };
   }, []);
