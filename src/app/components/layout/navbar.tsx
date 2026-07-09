@@ -27,15 +27,21 @@ export function Navbar() {
                             href={link.href}
                             onMouseEnter={() => setHoveredPath(link.href)}
                             onMouseLeave={() => setHoveredPath(null)}
-                            className={`uppercase relative py-2 rounded-full transition-colors duration-300`}
+                            className={`uppercase font-pixel relative py-2`}
                         >
                             <span className="relative z-10">{link.label}</span>
                         </Link>
                     ))}
                 </div>
             </div>
-            <div className="absolute right-0 top-2">
-                <ThemeToggle />
+            {/* <select name="option-bar" id="option-bar" className="uppercase absolute right-0 top-2 bg-card border-8 border-slash px-2 py-1">
+                    <option value="toggle-theme"><ThemeToggle /></option>
+            </select> */}
+            <div className="relative inline-block">
+                <button className="uppercase px-2 py-1 bg-card border-8 border-slash">Options</button>
+                <div className="absolute m-w-20 z-20">
+                    <ThemeToggle />
+                </div>
             </div>
         </nav>
     );

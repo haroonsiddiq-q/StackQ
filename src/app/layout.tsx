@@ -1,9 +1,12 @@
 import type { Metadata } from "next";
+import fs from "fs";
+import path from "path";
 import { Press_Start_2P, Inter } from "next/font/google";
 import CustomCursor from "@/app/components/ui/custom-cursor";
 import { CustomScrollbar } from "@/app/components/ui/custom-scrollbar";
 import { ThemeProvider } from "@/app/components/ui/theme-provider";
 import { Navbar } from "@/app/components/layout/navbar";
+import { MusicPlayer } from "@/app/components/ui/music-player";
 import "./globals.css";
 
 const pressStart2P = Press_Start_2P({
@@ -18,6 +21,12 @@ const inter = Inter({
   variable: "--font-body",
   display: "swap",
 });
+
+const AUDIO_EXT = /\.(mp3|wav|ogg|m4a)$/i;
+const audioDir = path.join(process.cwd(), "public", "audios");
+const songs = fs.existsSync(audioDir)
+  ? fs.readdirSync(audioDir).filter((file) => AUDIO_EXT.test(file))
+  : [];
 
 export const metadata: Metadata = {
   title: "StackQ - Portfolio",
@@ -40,6 +49,7 @@ export default function RootLayout({
         >
           <CustomCursor />
           <CustomScrollbar />
+          <MusicPlayer songs={songs} />
 
           <Navbar />
 
