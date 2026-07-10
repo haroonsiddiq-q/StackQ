@@ -10,7 +10,9 @@ export function Home() {
                     <h2 data-cursor-expand className="text-2xl w-fit">Welcome to my Portfolio website</h2>
                     <p data-cursor-expand className="max-w-260 text-wrap">This page will tell everything about me. Where I start, Where I'm at, What I've accomplish.</p>
                 </div>
-            <a data-cursor-expand className="absolute bottom-80 right-80 p-4 bg-card border-8 border-slash" href="#about">Scroll or Click here to continue</a>
+                <div className="h-40 flex justify-center items-end">
+                    <a data-cursor-expand className="p-4 max-h-fit bg-card border-8 border-slash" href="#about">Scroll or Click here to continue</a>
+                </div>
             </div>
         </div>
     );

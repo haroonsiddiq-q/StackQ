@@ -6,7 +6,6 @@ import CustomCursor from "@/app/components/ui/custom-cursor";
 import { CustomScrollbar } from "@/app/components/ui/custom-scrollbar";
 import { ThemeProvider } from "@/app/components/ui/theme-provider";
 import { Navbar } from "@/app/components/layout/navbar";
-import { MusicPlayer } from "@/app/components/ui/music-player";
 import "./globals.css";
 
 const pressStart2P = Press_Start_2P({
@@ -49,9 +48,8 @@ export default function RootLayout({
         >
           <CustomCursor />
           <CustomScrollbar />
-          <MusicPlayer songs={songs} />
 
-          <Navbar />
+          <Navbar songs={songs} />
 
           {children}
 

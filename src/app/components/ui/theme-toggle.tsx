@@ -20,10 +20,10 @@ export function ThemeToggle() {
     <button
       data-cursor-expand
       onClick={() => setTheme(resolvedTheme === "dark" ? "light" : "dark")} 
-      className="p-2"
+      className="p-2 bg-border"
       aria-label="Toggle theme"
     >
-      {resolvedTheme === "dark" ? <Sun className="h-5 w-5" /> : <Moon className="h-5 w-5" />}
+      {resolvedTheme === "dark" ? <Sun className="w-4 h-4 shrink-0 stroke-current stroke-3" /> : <Moon className="w-4 h-4 shrink-0 stroke-current stroke-3" />}
     </button>
   );
 }

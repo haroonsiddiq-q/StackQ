@@ -2,8 +2,7 @@
 
 import Link from "next/link";
 import { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import { ThemeToggle } from "@/app/components/ui/theme-toggle";
+import { OptionsMenu } from "@/app/components/ui/dropdown-option";
 
 const NAV_LINKS = [
     { label: "Home", href: "#home" },
@@ -13,36 +12,35 @@ const NAV_LINKS = [
     { label: "Contact", href: "#contact" },
 ];
 
-export function Navbar() {
+interface NavbarProps {
+    songs: string[];
+}
+
+export function Navbar({ songs }: NavbarProps) {
     const [hoveredPath, setHoveredPath] = useState<string | null>(null);
 
     return (
-        <nav className="fixed inset-y-0 right-4 z-50 flex items-center">
-            <div className="bg-card border-8 border-slash">
-                <div className="flex flex-col items-end text-xs p-4">
-                    {NAV_LINKS.map((link) => (
-                        <Link
-                            data-cursor-expand
-                            key={link.label}
-                            href={link.href}
-                            onMouseEnter={() => setHoveredPath(link.href)}
-                            onMouseLeave={() => setHoveredPath(null)}
-                            className={`uppercase font-pixel relative py-2`}
-                        >
-                            <span className="relative z-10">{link.label}</span>
-                        </Link>
-                    ))}
+        <>
+            <nav className="fixed inset-y-0 right-4 z-50 flex items-center">
+                <div className="bg-card border-8 border-slash">
+                    <div className="flex flex-col items-end text-xs p-4">
+                        {NAV_LINKS.map((link) => (
+                            <Link
+                                data-cursor-expand
+                                key={link.label}
+                                href={link.href}
+                                onMouseEnter={() => setHoveredPath(link.href)}
+                                onMouseLeave={() => setHoveredPath(null)}
+                                className={`uppercase font-pixel relative py-2`}
+                            >
+                                <span className="relative z-10">{link.label}</span>
+                            </Link>
+                        ))}
+                    </div>
                 </div>
-            </div>
-            {/* <select name="option-bar" id="option-bar" className="uppercase absolute right-0 top-2 bg-card border-8 border-slash px-2 py-1">
-                    <option value="toggle-theme"><ThemeToggle /></option>
-            </select> */}
-            <div className="relative inline-block">
-                <button className="uppercase px-2 py-1 bg-card border-8 border-slash">Options</button>
-                <div className="absolute m-w-20 z-20">
-                    <ThemeToggle />
-                </div>
-            </div>
-        </nav>
+            </nav>
+
+            <OptionsMenu songs={songs} />
+        </>
     );
 }
