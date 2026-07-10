@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 
 interface MusicPlayerProps {
-  songs: string[]; // filenames living in public/audios
+  songs: string[];
 }
 
 function shuffle<T>(arr: T[]): T[] {
@@ -15,11 +15,6 @@ function shuffle<T>(arr: T[]): T[] {
   return a;
 }
 
-// Turns "lofi-rainy-day_v2.mp3" into "lofi rainy day v2"
-function formatSongName(filename: string): string {
-  return filename.replace(/\.(mp3|wav|ogg|m4a)$/i, "").replace(/[-_]+/g, " ");
-}
-
 export function MusicPlayer({ songs }: MusicPlayerProps) {
   const [queue, setQueue] = useState<string[]>([]);
   const [index, setIndex] = useState(0);
@@ -27,9 +22,6 @@ export function MusicPlayer({ songs }: MusicPlayerProps) {
   const [started, setStarted] = useState(false);
   const audioRef = useRef<HTMLAudioElement | null>(null);
 
-  // Shuffle only on the client, in an effect — never during the initial
-  // render — so the server-rendered HTML and the first client render
-  // match exactly (Math.random() in render would cause a hydration error).
   useEffect(() => {
     setQueue(shuffle(songs));
   }, [songs]);
@@ -40,21 +32,17 @@ export function MusicPlayer({ songs }: MusicPlayerProps) {
     setIndex((prev) => {
       const next = prev + 1;
       if (next >= queue.length) {
-        setQueue(shuffle(songs)); // reshuffle so the next loop isn't identical
+        setQueue(shuffle(songs));
         return 0;
       }
       return next;
     });
   };
 
-  // Browsers block audio with sound until the user interacts with the
-  // page at least once, so the first click both starts playback and
-  // flips `started`. After that, the same button toggles play/pause.
   const togglePlay = () => {
     if (!started) {
       setStarted(true);
       setPlaying(true);
-      // audio.play() is called by the effect below once currentSong is set
       return;
     }
     if (playing) {
@@ -69,7 +57,6 @@ export function MusicPlayer({ songs }: MusicPlayerProps) {
   useEffect(() => {
     if (playing && audioRef.current) {
       audioRef.current.play().catch(() => {
-        // Autoplay was blocked (no user gesture yet) — reflect that in the UI
         setPlaying(false);
       });
     }
@@ -102,7 +89,7 @@ export function MusicPlayer({ songs }: MusicPlayerProps) {
           {!started
             ? "Click to play music"
             : currentSong
-              ? formatSongName(currentSong)
+              ? currentSong
               : "Loading..."}
         </p>
       </div>
